@@ -2,6 +2,7 @@
 Program for encryption and decryption given p, q, and e
 """
 
+
 # Creates a class for encrypting and decrypting given p, q, e, and m
 # Stores inside of object
 class RSA:
@@ -12,7 +13,7 @@ class RSA:
         self.e = e
 
         # Calculates n, phi, and d
-        self.n = p*q
+        self.n = p * q
         self.phi = (p - 1) * (q - 1)
         self.d = pow(self.e, -1, self.phi)
 
