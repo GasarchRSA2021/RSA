@@ -46,7 +46,7 @@ def quadSieve(N, B=19):
         sumexparr += vectorArr[d]
 
     sumexparr /= 2
-
+ 
     # calculate the "Y" value
     for i in range(len(sumexparr)):
         exp *= primes[i] ** sumexparr[i]

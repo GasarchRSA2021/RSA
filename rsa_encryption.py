@@ -1,16 +1,33 @@
 """
 Program for encryption and decryption given p, q, and e
 """
-
+import sympy
+import math
 
 # Creates a class for encrypting and decrypting given p, q, e, and m
 # Stores inside of object
 class RSA:
-    def __init__(self, p, q, e):
+    
+    def generatePrimes(L):
+        p = sympy.randprime(2, L)
+        q = sympy.randprime(2, L)
+        print(p, q)
+        return p, q
+
+    def is_coprime(e, p, q):
+        return math.gcd(p, q) == 1
+
+    def getE(self):
+        for i in range (self.phi, 1 -1):
+            if (is_coprime(i, p, q)):
+                e = i
+        print (e)
+        return e
+
+    def __init__(self, L):
         # Initializes
-        self.p = p
-        self.q = q
-        self.e = e
+        self.p, self.q = generatePrimes(L)
+        self.e = getE()
 
         # Calculates n, phi, and d
         self.n = p * q
@@ -24,3 +41,4 @@ class RSA:
     # Decrypts using d and n
     def decrypt(self, c):
         return pow(c, self.d, self.n)
+
