@@ -5,6 +5,8 @@ Program to test out rsa_encryption.py
 # Imports rsa_encryption.py to use the file's functions etc -> can call module by rsa instead of rsa_encryption
 import rsa_encryption as rsa
 
+m = int(input("Message: "))
+
 # Creates an object called test with given variables
 test = rsa.RSA(1000)
 
