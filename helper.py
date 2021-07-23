@@ -1,6 +1,9 @@
 """
 Functions that can help with other programs
 """
+import math
+from random import randint
+
 import numpy as np
 import sympy
 
@@ -63,3 +66,20 @@ def findDependentVectors(parityArr):
         if len(tempInds) != len(temp):
             ind.add(i)  # add row numbers that are independent
     return dep.difference(ind)  # return the set that contains all row numbers except those that are independent
+
+def generatePrimes(L):
+    p = sympy.randprime(2, L)
+    q = sympy.randprime(2, L)
+    return (p, q)
+
+def getED(phi):
+    e = randint(1, phi)
+    while True:
+        try:
+            if math.gcd(e, phi) != 1:
+                raise (ValueError)
+            else:
+                d = pow(e, -1, phi)
+                return (e, d)
+        except:
+            e += 1

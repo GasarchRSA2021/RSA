@@ -7,7 +7,9 @@ import factoring as f
 
 # Asks for N and B
 N = int(input("Enter N to be factored: "))
-B = int(input("Enter smoothness bound B: "))
+#B = int(input("Enter smoothness bound B: "))
 
 # Prints factor by quad sieve
-print("\nFactor: ", f.quadSieve(N, B))
+#print("\nFactor: ", f.quadSieve(N, B))
+
+print("\nFactor: ", f.pollardrho(N, f="x**2+1"))

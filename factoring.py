@@ -3,11 +3,9 @@ Quad Sieve Factoring
 https://en.wikipedia.org/wiki/Quadratic_sieve
 """
 import math
-
 import numpy as np
-
 import helper
-
+import sympy as sy
 
 # Quad Sieve uses difference of squares to find factors
 def quadSieve(N, B=19):
@@ -18,7 +16,7 @@ def quadSieve(N, B=19):
     parityArr = np.array([])  # keeps track of the parity values
 
     while len(parityArr) <= B + 1:
-        bFactor, expArr = (helper.bFactorable(primes, (a ** 2) % N))  # finds if factorisable and exp array 
+        bFactor, expArr = (helper.bFactorable(primes, (a ** 2) % N))  # finds if factorisable and exp array
 
         # adds to numArr, vectorArr, and parityArr
         if (bFactor == True):
@@ -55,3 +53,17 @@ def quadSieve(N, B=19):
     x = prod - exp
 
     return math.gcd(int(x), N)
+
+def pollardrho(N, f="x**2+1"):
+    def g(formula=f, **kwargs):
+        expr = sy.sympify(formula)
+        return expr.evalf(subs=kwargs)
+
+    x1 = 2
+    y = 2
+    d = 1
+    while d == 1:
+        x = g(x=x1)
+        y = g(x=g(x=y))
+        d = math.gcd(abs(int(x-y)), N)
+    return d
