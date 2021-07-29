@@ -13,3 +13,4 @@ n, e = r.public()
 
 print(countTime(f.pollardrho, 8051))
 print(countTime(f.quadSieve, 8051))
+print(countTime(f.trivial, 8051))

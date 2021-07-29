@@ -67,3 +67,12 @@ def pollardrho(N, f="x**2+1"):
         y = g(x=g(x=y))
         d = math.gcd(abs(int(x-y)), N)
     return d
+
+def trivial(N):
+    possibleFactors = list(sy.primerange(2, math.floor(math.sqrt(N))))
+
+    for i in reversed(possibleFactors):
+      if N % i == 0:
+         p = i
+         q = N/p
+         return p, q

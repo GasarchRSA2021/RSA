@@ -13,3 +13,6 @@ N = int(input("Enter N to be factored: "))
 #print("\nFactor: ", f.quadSieve(N, B))
 
 print("\nFactor: ", f.pollardrho(N, f="x**2+1"))
+
+p, q = f.trivial(N)
+print("\nFactors: ", p, ", ", q)
