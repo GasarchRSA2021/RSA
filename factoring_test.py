@@ -12,7 +12,8 @@ N = int(input("Enter N to be factored: "))
 # Prints factor by quad sieve
 #print("\nFactor: ", f.quadSieve(N, B))
 
-print("\nFactor: ", f.pollardrho(N, f="x**2+1"))
+#print("\nFactor: ", f.pollardrho(N, f="x**2+1"))
+print("\nFactor: ", f.fermat(N))
 
 p, q = f.trivial(N)
 print("\nFactors: ", p, ", ", q)

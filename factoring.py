@@ -68,6 +68,15 @@ def pollardrho(N, f="x**2+1"):
         d = math.gcd(abs(int(x-y)), N)
     return d
 
+def fermat(N):
+    a = math.ceil(math.sqrt(N))
+    b2 = a**2 - N
+    while (not(math.sqrt(b2).is_integer())):
+        a += 1
+        b2 = a ** 2 - N
+        print(a, b2)
+    return a - math.sqrt(b2)
+
 def trivial(N):
     possibleFactors = list(sy.primerange(2, math.floor(math.sqrt(N))))
 
