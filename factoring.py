@@ -3,6 +3,8 @@ Quad Sieve Factoring
 https://en.wikipedia.org/wiki/Quadratic_sieve
 """
 import math
+import random
+
 import numpy as np
 import helper
 import sympy as sy
@@ -52,21 +54,32 @@ def quadSieve(N, B=19):
     # find the first factor using the diff of squares
     x = prod - exp
 
-    return math.gcd(int(x), N)
+    p = math.gcd(int(x), N)
+    q = N/p
+
+    return (p, q)
 
 def pollardrho(N, f="x**2+1"):
     def g(formula=f, **kwargs):
         expr = sy.sympify(formula)
-        return expr.evalf(subs=kwargs)
+        return int(expr.evalf(subs=kwargs)) % N
 
-    x1 = 2
+    x = 2
     y = 2
     d = 1
+
     while d == 1:
-        x = g(x=x1)
+        x = g(x=x)
         y = g(x=g(x=y))
-        d = math.gcd(abs(int(x-y)), N)
-    return d
+        if (x != y):
+            d = math.gcd(abs(x - y), N)
+
+    if d == N:
+        return None
+    else:
+        return d, N/d
+
+
 
 def fermat(N):
     a = math.ceil(math.sqrt(N))
@@ -74,10 +87,20 @@ def fermat(N):
     while (not(math.sqrt(b2).is_integer())):
         a += 1
         b2 = a ** 2 - N
-        print(a, b2)
-    return a - math.sqrt(b2)
+
+    p = a - math.sqrt(b2)
+    q = N/p
+
+    return (p, q)
 
 def trivial(N):
+    for i in range(2, math.ceil(math.sqrt(N))+1):
+      if N % i == 0:
+         p = i
+         q = N/p
+         return p, q
+
+def trivial2(N):
     possibleFactors = list(sy.primerange(2, math.floor(math.sqrt(N))))
 
     for i in reversed(possibleFactors):
