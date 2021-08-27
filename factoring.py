@@ -10,25 +10,29 @@ import helper
 import sympy as sy
 
 # Quad Sieve uses difference of squares to find factors
-def quadSieve(N, B=19):
+def quadSieve(N, B=100000):
+    flag = False
+
     a = math.ceil(math.sqrt(N))  # find the starting testing value (ceiling of the square root of N)
     primes = helper.genNPrimes(B)  # use the genNPrimes() function to generate a list of B primes
     numArr = []  # keeps track of the a values
     vectorArr = np.array([])  # keeps track of the exponent values
     parityArr = np.array([])  # keeps track of the parity values
 
-    while len(parityArr) <= B + 1:
+    while True:
         bFactor, expArr = (helper.bFactorable(primes, (a ** 2) % N))  # finds if factorisable and exp array
 
         # adds to numArr, vectorArr, and parityArr
         if (bFactor == True):
             numArr.append(a)
-            if a == math.ceil(math.sqrt(N)):
+            if not(flag):
                 vectorArr = expArr
                 parityArr = helper.parityVector(expArr)
+                flag = True
             else:
                 vectorArr = np.vstack([vectorArr, expArr])
                 parityArr = np.vstack([parityArr, helper.parityVector(expArr)])
+                print(vectorArr)
 
                 dep = helper.findDependentVectors(parityArr)  # finds the dependent vectors
                 if len(dep) > 0:  # if there are dependent vectors, then stop looking for more vectors
@@ -54,36 +58,41 @@ def quadSieve(N, B=19):
     # find the first factor using the diff of squares
     x = prod - exp
 
+    #print (prod, exp, x)
+
     p = math.gcd(int(x), N)
     q = N/p
 
     return (p, q)
 
-def pollardrho(N, f="x**2+1"):
-    def g(formula=f, **kwargs):
-        expr = sy.sympify(formula)
-        return int(expr.evalf(subs=kwargs)) % N
-
+def pollardrho(N):
     x = 2
     y = 2
+    c = 1
     d = 1
 
+    def f(x, c=c, N=N, exp=2):
+        return (x ** 2 + c) % N
+
     while d == 1:
-        x = g(x=x)
-        y = g(x=g(x=y))
-        if (x != y):
+        x = f(x)
+        y = f(f(y))
+
+
+        if (d == N):
+            x = (random.randint(0, 2) % (N - 2))
+            y = x
+            c = (random.randint(0, 1) % (N - 1))
+
+        else:
             d = math.gcd(abs(x - y), N)
 
-    if d == N:
-        return None
-    else:
-        return d, N/d
-
-
+    return d, N/d
 
 def fermat(N):
     a = math.ceil(math.sqrt(N))
     b2 = a**2 - N
+    print(a, b2)
     while (not(math.sqrt(b2).is_integer())):
         a += 1
         b2 = a ** 2 - N
